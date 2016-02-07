@@ -8,6 +8,10 @@ You must have pip and setuptools installed:
     sudo apt-get install python-pip
     sudo pip install --upgrade setuptools
 
+Required packages (these should be installed with setup.py):
+* lxml
+* requests
+
 Install the package with symlink, so changes will be immediately available:
 
     sudo python setup.py develop

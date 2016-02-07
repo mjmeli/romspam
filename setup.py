@@ -1,5 +1,14 @@
 from setuptools import setup
 
+install_requires = [
+    'lxml',
+    'requests'
+]
+
+tests_require = [
+    'nose'
+]
+
 setup(name='romspam',
       version='1.0',
       description='Spam bae with sappy messages over social media on V-Day.',
@@ -20,5 +29,6 @@ setup(name='romspam',
       },
       zip_safe=False,
       test_suite='nose.collector',
-      tests_require=['nose']
+      tests_require=tests_require,
+      install_requires=install_requires
 )
