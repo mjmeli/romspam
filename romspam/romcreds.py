@@ -60,10 +60,10 @@ def getcreds():
     # Twitter
     print "Twitter credentials:"
     creds['twitter'] = {}
-    creds['twitter']['consumerKey'] = raw_input("Consumer/API key: ")
-    creds['twitter']['consumerSecret'] = raw_input("Consumer/API secret: ")
-    creds['twitter']['accessToken'] = raw_input("Access token: ")
-    creds['twitter']['accessSecret'] = raw_input("Access token secret: ")
+    creds['twitter']['consumerKey'] = raw_input("Consumer/API key: ").strip()
+    creds['twitter']['consumerSecret'] = raw_input("Consumer/API secret: ").strip()
+    creds['twitter']['accessToken'] = raw_input("Access token: ").strip()
+    creds['twitter']['accessSecret'] = raw_input("Access token secret: ").strip()
 
     # For formatting
     print ""
@@ -117,3 +117,18 @@ def is_json(str):
     except ValueError, e:
         return False
     return True
+
+"""
+    stringify
+    Convert credentials to a pretty string instead of ugly json.
+"""
+def stringify(creds):
+    # Convert to json object
+    creds = json.loads(creds)
+
+    # Twitter only at the moment
+    return "Twitter:" + \
+           "\n    Consumer Key: " + creds['twitter']['consumerKey'] + \
+           "\n    Consumer Secret: " + creds['twitter']['consumerSecret'] + \
+           "\n    Access Token: " + creds['twitter']['accessToken'] + \
+           "\n    Access Secret: " + creds['twitter']['accessSecret']
