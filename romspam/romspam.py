@@ -64,7 +64,7 @@ def start():
             else:
                 sent = set({})
             quote = romquote.getquote()
-            while quote in sent:
+            while quote in sent or not isinstance(quote, str):
                 quote = romquote.getquote()
 
             # Send tweet
