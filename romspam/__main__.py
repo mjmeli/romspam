@@ -4,7 +4,7 @@ import romspam
 def main():
     # Parse command line arguments. The following commands are possible:
     #       -h / help           display usage information
-    #       reset               reset sent romantic phrases
+    #       reset               reset sent romantic quotes
     #       start               start sending romantic phrases
     #       auth[enticate]      enter credentials
     #       cred[entials]       print the currently stored credentials
