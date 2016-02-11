@@ -1,13 +1,7 @@
 from setuptools import setup
 
-install_requires = [
-    'lxml',
-    'requests'
-]
-
-tests_require = [
-    'nose'
-]
+install_requires = ['lxml', 'requests', 'python-twitter', 'SimpleAES']
+tests_require = ['nose', 'six>=1.7', 'mock']
 
 setup(name='romspam',
       version='1.0',

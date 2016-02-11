@@ -3,14 +3,18 @@ Valentine's Day project involving spamming annoyingly sappy posts to someone ove
 
 ## Development (Linux)
 
-You must have pip and setuptools installed:
+You must various things installed (pip, setuptools, python-dev, libffi-dev) installed:
 
     sudo apt-get install python-pip
     sudo pip install --upgrade setuptools
+    sudo apt-get install python-dev
+    sudo apt-get install libffi-dev
 
 Required packages (these should be installed with setup.py):
 * lxml
 * requests
+* python-twitter
+* SimpleAES
 
 Install the package with symlink, so changes will be immediately available:
 
@@ -50,3 +54,33 @@ Then to run the tests from the root of the repo:
 Both of the prior steps can be achieved by simply typing:
 
     sudo python setup.py test
+
+## Thanks
+
+* python-twitter
+* SimpleAES
+
+# Issues
+
+**When running tests, I get the error `ImportError: cannot import name wraps`.**
+
+This is probably because the version of six python is using is not the one that
+mock supports. To verify, do the following:
+
+    >>> import six
+    >>> six.__version__
+
+The version needs to be at least 1.7. To fix this, find the outdated version of
+six and delete it.
+
+    >>> import six
+    >>> six.__file__
+    '/usr/lib/python2.7/dist-packages/six.pyc'
+    >>> exit()
+    sudo rm -f /usr/lib/python2.7/dist-packages/six.py
+    sudo rm -f /usr/lib/python2.7/dist-packages/six.pyc
+    >>> import six
+    >>> six.__file__
+    '/usr/local/lib/python2.7/dist-packages/six.pyc'
+    >>> six.__version__
+    '1.10.0'
