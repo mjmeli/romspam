@@ -36,7 +36,7 @@ class TestCreds(TestCase):
         self.check_creds(creds)
 
         # Encrypt and then immediately decrypt credentials
-        with mock.patch('getpass.getpass', return_value='testkey'):
+        with mock.patch('getpass.getpass', return_value=''):
             enc = romcreds.encryptcreds(creds)
             dec = romcreds.decryptcreds(enc)
 
