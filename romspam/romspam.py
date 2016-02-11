@@ -24,7 +24,9 @@ def print_usage():
 def reset():
     if os.path.isfile("sent"):
         os.remove("sent")
-    print "Sent phrases reset!"
+        print "Sent phrases reset!"
+    else:
+        print "You don't even have any sent phrases..."
 
 # When send, start sending romantic phrases
 def send():
