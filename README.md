@@ -103,6 +103,10 @@ Or install dependencies using pip:
 * six
 * mock
 
+And then use `nose`:
+
+    nosetests
+
 # Issues
 
 **When running tests, I get the error `ImportError: cannot import name wraps`.**
