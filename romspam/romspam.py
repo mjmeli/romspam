@@ -17,7 +17,7 @@ def print_usage():
     print "Commands:"
     print "  [--]help/-h       display this usage information"
     print "  reset             reset sent romantic phrases"
-    print "  start              start sending romantic phrases"
+    print "  start             start sending romantic phrases"
     print "  auth[enticate]    enter social media credentials"
     print "  cred[entials]     print the currently stored credentials"
 
