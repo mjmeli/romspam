@@ -6,6 +6,7 @@
 import os
 import sys
 import json
+import time
 import romquote, romcreds, romtwitter, setencoder
 
 # Print usage information to command line
@@ -16,7 +17,7 @@ def print_usage():
     print "Commands:"
     print "  [--]help/-h       display this usage information"
     print "  reset             reset sent romantic phrases"
-    print "  send              start sending romantic phrases"
+    print "  start              start sending romantic phrases"
     print "  auth[enticate]    enter social media credentials"
     print "  cred[entials]     print the currently stored credentials"
 
@@ -28,8 +29,8 @@ def reset():
     else:
         print "You don't even have any sent phrases..."
 
-# When send, start sending romantic phrases
-def send():
+# When start, start sending romantic phrases
+def start():
     # Verify credentials exist. If not, give some suggestions.
     if not os.path.isfile("creds"):
         print "Could not locate credentials file."
@@ -52,27 +53,36 @@ def send():
     if user[0] == "@":
         user = user[1:]
 
-    # Get a quote to send. We want it to be unique, so we must check against
-    # the sent quotes file. If this file doesn't exist it's obviously unique.
-    if os.path.isfile("sent"):
-        with open("sent", "r") as f:
-            sent = set(json.loads(f.read()))
-    else:
-        sent = set({})
-    quote = romquote.getquote()
-    while quote in sent:
-        quote = romquote.getquote()
+    # Everything is set up to run. Now we just send a quote every 15 minutes.
+    try:
+        while True:
+            # Get a quote to send. We want it to be unique, so we must check against
+            # the sent quotes file. If this file doesn't exist it's obviously unique.
+            if os.path.isfile("sent"):
+                with open("sent", "r") as f:
+                    sent = set(json.loads(f.read()))
+            else:
+                sent = set({})
+            quote = romquote.getquote()
+            while quote in sent:
+                quote = romquote.getquote()
 
-    # Send tweet
-    print "Sending..."
-    #romtwitter.sendtweet(api, user, quote)
-    print quote
-    print "Done!"
+            # Send tweet
+            print "Sending..."
+            #romtwitter.sendtweet(api, user, quote)
+            print quote
+            print "Done!"
 
-    # Add quote to the set and write out
-    sent.add(quote)
-    with open("sent", "w+") as f:
-        f.write(json.dumps(sent, cls=setencoder.SetEncoder))
+            # Add quote to the set and write out
+            sent.add(quote)
+            with open("sent", "w+") as f:
+                f.write(json.dumps(sent, cls=setencoder.SetEncoder))
+
+            # Wait 15 minutes
+            time.sleep(60*15)
+    except KeyboardInterrupt:
+        print "\nHappy Valentine's Day!"
+        pass
 
 # When authenticate, request the user's credentials
 def authenticate():
@@ -93,3 +103,7 @@ def print_credentials():
         print romcreds.stringify(creds)
     else:
         print "No credentials are currently stored. Try using \'romspam auth\'."
+
+# When quote, just print out a random quote
+def quote():
+    print romquote.getquote()
