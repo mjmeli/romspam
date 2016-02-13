@@ -88,7 +88,10 @@ def start():
 
             # Send tweet
             print "Sending..."
-            #romtwitter.sendtweet(api, user, quote, image)
+            try:
+                romtwitter.sendtweet(api, user, quote, image)
+            except:
+                continue
             print quote
             print "Done! Waiting..."
 
