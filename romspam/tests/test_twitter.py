@@ -4,14 +4,15 @@ import mock
 from romspam import romcreds
 from romspam import romtwitter
 from romspam import romquote
+from romspam import romspam
 
 class TestTwitter(TestCase):
     # Test to make authentication is working
     def test_authentication(self):
         # Get credentials
-        if os.path.isfile("creds"):
+        if os.path.isfile(romspam.rootLoc + "creds"):
             with mock.patch('getpass.getpass', return_value=''):
-                creds = romcreds.readcreds("creds")
+                creds = romcreds.readcreds(romspam.rootLoc + "creds")
 
             # Get an api instance
             try:

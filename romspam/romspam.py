@@ -7,7 +7,16 @@ import os
 import sys
 import json
 import time
-import romquote, romcreds, romtwitter, setencoder
+import romquote, romcreds, romtwitter, setencoder, romimage
+
+rootLoc = os.path.expanduser("~") + "/romspam/"
+
+# Establish consistent directory structure. We store data in ~/romspam for ease.
+def init():
+    if not os.path.isdir(rootLoc):
+        ok.makedirs(rootLoc)
+    if not os.path.isdir(rootLoc + "images"):
+        os.makedirs(rootLoc + "images");
 
 # Print usage information to command line
 def print_usage():
@@ -16,23 +25,27 @@ def print_usage():
     print ""
     print "Commands:"
     print "  [--]help/-h       display this usage information"
-    print "  reset             reset sent romantic phrases"
+    print "  reset             reset sent romantic quotes and images"
     print "  start             start sending romantic phrases"
     print "  auth[enticate]    enter social media credentials"
     print "  cred[entials]     print the currently stored credentials"
 
-# When reset, clear sent romantic phrases.
+# When reset, clear sent romantic phrases. and images
 def reset():
-    if os.path.isfile("sent"):
-        os.remove("sent")
+    if os.path.isfile(rootLoc + "sent"):
+        os.remove(rootLoc + "sent")
         print "Sent phrases reset!"
     else:
-        print "You don't even have any sent phrases..."
+        print "No sent phrases existed."
+    if romimage.resetsent(os.path.join(rootLoc, "images")):
+        print "Sent images reset!"
+    else:
+        print "No sent images existed."
 
 # When start, start sending romantic phrases
 def start():
     # Verify credentials exist. If not, give some suggestions.
-    if not os.path.isfile("creds"):
+    if not os.path.isfile(rootLoc + "creds"):
         print "Could not locate credentials file."
         print "Did you try running romspam with the auth option?"
         print "See help for more info (\'romspam help\')."
@@ -40,7 +53,7 @@ def start():
 
     # Get credentials
     print "Getting credentials. Please help me decrypt!"
-    creds = romcreds.readcreds("creds")
+    creds = romcreds.readcreds(rootLoc + "creds")
 
     # Authenticate with twitter
     api = romtwitter.authenticate(creds)
@@ -58,8 +71,8 @@ def start():
         while True:
             # Get a quote to send. We want it to be unique, so we must check against
             # the sent quotes file. If this file doesn't exist it's obviously unique.
-            if os.path.isfile("sent"):
-                with open("sent", "r") as f:
+            if os.path.isfile(rootLoc + "sent"):
+                with open(rootLoc + "sent", "r") as f:
                     sent = set(json.loads(f.read()))
             else:
                 sent = set({})
@@ -67,16 +80,26 @@ def start():
             while quote in sent or not isinstance(quote, str):
                 quote = romquote.getquote()
 
+            # If we have a short tweet, we want to add a picture, if one exists.
+            if len(quote) + len(user) + 2 <= 140:
+                image = romimage.getimage(rootLoc + "images")
+            else:
+                image = None
+
             # Send tweet
             print "Sending..."
-            #romtwitter.sendtweet(api, user, quote)
+            #romtwitter.sendtweet(api, user, quote, image)
             print quote
-            print "Done!"
+            print "Done! Waiting..."
 
-            # Add quote to the set and write out
+            # Add quote to the sent set and write out
             sent.add(quote)
-            with open("sent", "w+") as f:
+            with open(rootLoc + "sent", "w+") as f:
                 f.write(json.dumps(sent, cls=setencoder.SetEncoder))
+
+            # Add image to sent directory, if it exists
+            if image is not None:
+                romimage.moveimagesent(image)
 
             # Wait 15 minutes
             time.sleep(60*15)
@@ -86,20 +109,20 @@ def start():
 
 # When authenticate, request the user's credentials
 def authenticate():
-    if os.path.isfile("creds"):
+    if os.path.isfile(rootLoc + "creds"):
         answer = raw_input("You already have credentials. Continue anyway? [y/n] ")
         if answer == "y":
             print ""
-            romcreds.storecreds("creds")
+            romcreds.storecreds(rootLoc + "creds")
         elif answer != "n":
             print "I asked for y/n..."
     else:
-        romcreds.storecreds("creds")
+        romcreds.storecreds(rootLoc + "creds")
 
 # When credentials, print the currently stored credentials.
 def print_credentials():
-    if os.path.isfile("creds"):
-        creds = romcreds.readcreds("creds")
+    if os.path.isfile(rootLoc + "creds"):
+        creds = romcreds.readcreds(rootLoc + "creds")
         print romcreds.stringify(creds)
     else:
         print "No credentials are currently stored. Try using \'romspam auth\'."

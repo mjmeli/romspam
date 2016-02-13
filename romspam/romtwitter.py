@@ -48,9 +48,9 @@ def authenticate(creds):
 """
     sendtweet
     Post a tweet to Twitter. Don't try to worry about character limits, this
-    will handle it better.
+    will handle it better. Can specify a media path to upload an image.
 """
-def sendtweet(api, user, tweet):
+def sendtweet(api, user, tweet, media=None):
     # Verify authentication first
     try:
         api.VerifyCredentials()
@@ -60,9 +60,12 @@ def sendtweet(api, user, tweet):
     # Segment tweet into 140 characters or less
     tweets = formattweet(user, tweet)
 
-    # Post each tweet
+    # Post each tweet, with or without media
     for tweet in tweets:
-        status = api.PostUpdate(tweet)
+        if media is None:
+            status = api.PostUpdate(tweet)
+        else:
+            status = api.PostMedia(tweet, media)
 
 """
     formattweet

@@ -1,10 +1,15 @@
 import sys
+import os
 import romspam
 
 def main():
+    # First thing, make sure that the expected folder structure is in tact. This
+    # means having an "images" folder in the root of the repo.
+    romspam.init()
+
     # Parse command line arguments. The following commands are possible:
     #       -h / help           display usage information
-    #       reset               reset sent romantic phrases
+    #       reset               reset sent romantic quotes and images
     #       start               start sending romantic phrases
     #       auth[enticate]      enter credentials
     #       cred[entials]       print the currently stored credentials

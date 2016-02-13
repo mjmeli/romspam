@@ -32,7 +32,7 @@ def storecreds(filename):
 """
 def readcreds(filename):
     # Verify crendentials exists first
-    if not os.path.isfile("creds"):
+    if not os.path.isfile(filename):
         raise Exception("Credentials file does not exist!")
 
     # Read credentials

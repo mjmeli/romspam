@@ -1,31 +1,96 @@
 # rom-spam
 Valentine's Day project involving spamming annoyingly sappy posts to someone over social media.
 
-## Development (Linux)
+At the moment, this only allows you to send quotes over Twitter.
 
-You must various things installed (pip, setuptools, python-dev, libffi-dev) installed:
+## Installation
+
+After cloning, make sure that you have `pip` and `setuptools` installed. You may
+or may not also need `python-dev`, and `libffi-dev` installed.
 
     sudo apt-get install python-pip
     sudo pip install --upgrade setuptools
-    sudo apt-get install python-dev
-    sudo apt-get install libffi-dev
+    sudo apt-get install python-dev     # optional?
+    sudo apt-get install libffi-dev     # optional?
 
-Required packages (these should be installed with setup.py):
-* lxml
-* requests
-* python-twitter
-* SimpleAES
+You can now install with:
 
-Install the package with symlink, so changes will be immediately available:
+    sudo python setup.py install
+
+This should install all missing dependencies. If not, you can use `pip` to install:
+
+* lxml (https://github.com/lxml/lxml)
+* requests (https://github.com/kennethreitz/requests)
+* python-twitter (https://github.com/bear/python-twitter)
+* SimpleAES (https://github.com/nvie/SimpleAES)
+
+## Usage
+In general, follow the format below:
+
+    romspam <command>
+
+### File Locations
+This tool keeps track of certain files. They will be placed in `~/romspam`.
+
+### Commands
+
+#### Help
+Display usage information.
+
+    romspam help
+
+#### Get a Quote
+This tool sends sappy quotes. Maybe you just want to get a quote?
+
+    romspam quote
+
+#### Authenticate
+In order to use full functionality, you need to authenticate with Twitter.
+Currently this only supports doing so through generating OAuth tokens.
+
+See: https://dev.twitter.com/oauth/overview/application-owner-access-tokens
+
+Once you do this, you can enter your tokens and keys with the following command:
+
+    romspam auth
+
+After entering, you will be forced to encrypt these credentials for storage on
+your machine. They are encrypted with AES-256 via a key that you are asked for.
+Remember the key - you have to enter it manually when starting the tool.
+
+#### Show Credentials
+Since the credentials are encrypted, you can't see what credentials you have saved.
+If you want to see them, run:
+
+    romspam cred
+
+Obviously this prints them in plain-text, so be careful.
+
+#### Start Sending
+Once you have authenticated with Twitter, you probably want to start spamming bae.
+
+    romspam start
+
+This gets a quote and sends a tweet every 15 minutes by default. Quotes are kept
+track of so duplicates are not sent.
+
+If a tweet is less than 140 characters, you may also send an image. This is done
+by putting images ending in `.png`, `jpg`, or `.gif` into the images directory.
+Like quotes, they are tracked so duplicates are not sent.
+
+#### Reseting Quotes
+To keep track of duplicates across runs of the application (in case of crash or something),
+sent quotes are stored in a local file and sent images are stored in a special directory.
+To reset what quotes and images have been sent, you can run:
+
+    romspam reset
+
+## Development
+It's easiest to setup with symlink to reflect changes without having to reinstall:
 
     sudo python setup.py develop
 
 The project is configured to have entry point to `__main__.py`'s main function.
-After install, you can run the application by simply typing:
-
-    romspam <options>
-
-Leaving out options or using the `-h` option displays help.
 
 Alternatively, if you want to have your own custom entry:
 
@@ -33,32 +98,17 @@ Alternatively, if you want to have your own custom entry:
     >>> import romspam
     >>> romspam.<entry>    # change to entry
 
-Develop under the `romspam` directory. Possible entry points should be in
-`__main__.py`. The default entry point is `main` in `__main__.py`. See next
-section for writing test cases.
-
-To clean out compiled files (not necessary):
-```
-find -name "*.pyc" -delete
-```
-## Tests (Linux)
-
-Tests can be created in the tests directory. To run tests, you need to have nose:
-
-    sudo pip install nose
-
-Then to run the tests from the root of the repo:
-
-    nosetests
-
-Both of the prior steps can be achieved by simply typing:
+## Testing
+If you want to run the unit tests, you need a few more dependencies. You can
+simply run:
 
     sudo python setup.py test
 
-## Thanks
+Or install dependencies using pip:
 
-* python-twitter
-* SimpleAES
+* nose
+* six
+* mock
 
 # Issues
 

@@ -18,5 +18,5 @@ def getquote():
     quotearr = tree.xpath('//div[@id="hl1"]/text()')
 
     # Format the quote array properly into a single string
-    quote = '\n'.join(quotearr).replace('`', '\'')
+    quote = '\n'.join(quotearr).replace('`', '\'').replace("  "," ")
     return quote
