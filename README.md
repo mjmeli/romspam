@@ -105,10 +105,21 @@ simply run:
     sudo python setup.py test
 
 Or install dependencies using pip:
+<<<<<<< HEAD
 
 * nose
 * six
 * mock
+=======
+
+* nose
+* six
+* mock
+
+And then use `nose`:
+
+    nosetests
+>>>>>>> 71b1b7fc95e429219a0f0566285926f3b913934c
 
 # Issues
 
