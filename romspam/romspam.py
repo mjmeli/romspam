@@ -73,7 +73,11 @@ def start():
             # the sent quotes file. If this file doesn't exist it's obviously unique.
             if os.path.isfile(rootLoc + "sent"):
                 with open(rootLoc + "sent", "r") as f:
-                    sent = set(json.loads(f.read()))
+                    sentquotes = f.read()
+                    if len(sentquotes) == 0:
+                        sent = set({})
+                    else:
+                        sent = set(json.loads(sentquotes))
             else:
                 sent = set({})
             quote = romquote.getquote()
