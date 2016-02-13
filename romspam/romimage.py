@@ -11,7 +11,10 @@ def getimage(directory):
         raise Exception("romimage.getimage was supplied an invalid directory.")
 
     choices = [f for f in os.listdir(directory) if f.endswith(".png") or f.endswith(".jpg") or f.endswith(".gif")]
-    return os.path.join(directory, random.choice(choices))
+    if len(choices) == 0:
+        return None
+    else:
+        return os.path.join(directory, random.choice(choices))
 
 """
     moveimagesent
