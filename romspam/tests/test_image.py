@@ -12,5 +12,5 @@ class TestImage(TestCase):
 
         # Get image and check it exists
         image = romimage.getimage(directory)
-        self.assertTrue(image.endswith(".png") or image.endswith(".jpg") or image.endswith(".gif"))
+        self.assertTrue(image.endswith(".png") or image.endswith(".jpg") or image.endswith(".gif") or f.endswith(".jpeg"))
         self.assertTrue(os.path.isfile(image) or image == None)

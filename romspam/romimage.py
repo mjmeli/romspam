@@ -10,7 +10,7 @@ def getimage(directory):
     if not os.path.isdir(directory):
         raise Exception("romimage.getimage was supplied an invalid directory.")
 
-    choices = [f for f in os.listdir(directory) if f.endswith(".png") or f.endswith(".jpg") or f.endswith(".gif")]
+    choices = [f for f in os.listdir(directory) if f.endswith(".png") or f.endswith(".jpg") or f.endswith(".gif") or f.endswith(".jpeg")]
     if len(choices) == 0:
         return None
     else:
