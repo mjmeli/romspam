@@ -76,7 +76,7 @@ track of so duplicates are not sent.
 
 If a tweet is less than 140 characters, you may also send an image. This is done
 by putting images ending in `.png`, `jpg`, or `.gif` into the images directory.
-Like quotes, they are tracked so duplicates are not sent.
+Like quotes, they are tracked so duplicates are not sent. See "Issues" below if you don't have an images directory.
 
 #### Reseting Quotes
 To keep track of duplicates across runs of the application (in case of crash or something),
@@ -105,13 +105,6 @@ simply run:
     sudo python setup.py test
 
 Or install dependencies using pip:
-<<<<<<< HEAD
-
-* nose
-* six
-* mock
-=======
-
 * nose
 * six
 * mock
@@ -119,7 +112,6 @@ Or install dependencies using pip:
 And then use `nose`:
 
     nosetests
->>>>>>> 71b1b7fc95e429219a0f0566285926f3b913934c
 
 # Issues
 
@@ -145,3 +137,7 @@ six and delete it.
     '/usr/local/lib/python2.7/dist-packages/six.pyc'
     >>> six.__version__
     '1.10.0'
+
+**I want to send images, but I don't see an images folder.**
+
+First, make sure you are looking in the correct directory. The tool looks for images at `~/romspam/images`. If this directory doesn't exist, run the tool once. You don't have to specify any options. This should create the folders.
