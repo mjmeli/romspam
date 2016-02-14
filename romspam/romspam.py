@@ -81,7 +81,7 @@ def start():
             else:
                 sent = set({})
             quote = romquote.getquote()
-            while quote in sent or not isinstance(quote, str):
+            while quote in sent or not isinstance(quote, str) or len(quote) > (140 - len(user) - 2):
                 quote = romquote.getquote()
 
             # If we have a short tweet, we want to add a picture, if one exists.
@@ -97,7 +97,7 @@ def start():
             except:
                 continue
             print quote
-            print "Done! Waiting..."
+            print "Done at " + time.strftime("%I:%M%p") + "! Waiting..."
 
             # Add quote to the sent set and write out
             sent.add(quote)
