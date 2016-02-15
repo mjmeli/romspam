@@ -9,9 +9,8 @@ import shutil
 def getimage(directory):
     if not os.path.isdir(directory):
         raise Exception("romimage.getimage was supplied an invalid directory.")
-
-    choices = [f for f in os.listdir(directory) if f.endswith(".png") or f.endswith(".jpg") or f.endswith(".gif") or f.endswith(".jpeg")]
-    if len(choices) == 0:
+    choices = [f for f in os.listdir(directory) if f.lower().endswith(".png") or f.lower().endswith(".jpg") or f.lower().endswith(".gif") or f.lower().endswith(".jpeg")]
+    if choices is None or len(choices) == 0:
         return None
     else:
         return os.path.join(directory, random.choice(choices))

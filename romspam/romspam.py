@@ -81,7 +81,7 @@ def start():
             else:
                 sent = set({})
             quote = romquote.getquote()
-            while quote in sent or not isinstance(quote, str) or len(quote) > (140 - len(user) - 2):
+            while quote in sent or not isinstance(quote, str):
                 quote = romquote.getquote()
 
             # If we have a short tweet, we want to add a picture, if one exists.
@@ -94,7 +94,9 @@ def start():
             print "Sending..."
             try:
                 romtwitter.sendtweet(api, user, quote, image)
-            except:
+            except Exception as e:
+                print e.message
+                print "Image=" + image
                 continue
             print quote
             print "Done at " + time.strftime("%I:%M%p") + "! Waiting..."
