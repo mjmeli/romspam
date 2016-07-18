@@ -3,6 +3,8 @@ Valentine's Day project involving spamming annoyingly sappy posts to someone ove
 
 At the moment, this only allows you to send quotes over Twitter.
 
+This requires some minor initial configuration involving setting up your Twitter account for login via OAuth. All login credentials are stored locally and **encrypted using AES-256 encryption**.
+
 ## Installation
 
 After cloning, make sure that you have `pip` and `setuptools` installed. You may
