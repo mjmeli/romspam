@@ -9,7 +9,7 @@ import json
 import time
 import romquote, romcreds, romtwitter, setencoder, romimage
 
-rootLoc = os.path.expanduser("~") + "/romspam/"
+rootLoc = os.path.expanduser("~") + "/.romspam/"
 
 # Establish consistent directory structure. We store data in ~/romspam for ease.
 def init():

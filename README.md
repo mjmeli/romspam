@@ -24,7 +24,7 @@ In general, follow the format below:
     romspam <command>
 
 ### File Locations
-This tool keeps track of certain files. They will be placed in `~/romspam`.
+This tool keeps track of certain files. They will be placed in `~/.romspam`.
 
 ### Commands
 
