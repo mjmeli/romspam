@@ -7,17 +7,9 @@ This requires some minor initial configuration involving setting up your Twitter
 
 ## Installation
 
-After cloning, make sure that you have `pip` and `setuptools` installed. You may
-or may not also need `python-dev`, and `libffi-dev` installed.
+Installation is easy with `pip`:
 
-    sudo apt-get install python-pip
-    sudo pip install --upgrade setuptools
-    sudo apt-get install python-dev     # optional?
-    sudo apt-get install libffi-dev     # optional?
-
-You can now install with:
-
-    sudo python setup.py install
+    sudo pip install .
 
 This should install all missing dependencies. If not, you can use `pip` to install:
 
