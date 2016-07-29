@@ -1,4 +1,6 @@
-# rom-spam
+# romspam
+![](https://travis-ci.org/mjmeli/MovingHelper.svg?branch=master)
+
 Valentine's Day project involving spamming annoyingly sappy posts to someone over social media.
 
 At the moment, this only allows you to send quotes over Twitter.
