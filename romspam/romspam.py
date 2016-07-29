@@ -14,7 +14,7 @@ rootLoc = os.path.expanduser("~") + "/.romspam/"
 # Establish consistent directory structure. We store data in ~/romspam for ease.
 def init():
     if not os.path.isdir(rootLoc):
-        ok.makedirs(rootLoc)
+        os.makedirs(rootLoc)
     if not os.path.isdir(rootLoc + "images"):
         os.makedirs(rootLoc + "images");
 
