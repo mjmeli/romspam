@@ -1,0 +1,7 @@
+lxml
+requests
+python-twitter
+SimpleAES
+nose
+six
+mock
